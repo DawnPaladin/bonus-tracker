@@ -58,6 +58,7 @@ function updateTotal() {
 			$thisRow.remove();
 			updateTotal();
 		})
-		.on('input', updateTotal)
+		.on('input', updateTotal) // checkboxes
+		.on('change', updateTotal) // recalc on each keypress
 	;
 })();
