@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Bonus Tracker</title>
+	<link rel="stylesheet" href="style.css">
+</head>
+<body>
+	<table>
+		<thead>
+			<tr>
+				<th>Name</th>
+				<th>Amount</th>
+				<th>On/off</th>
+				<th>Rows</th>
+			</tr>
+		</thead>
+		<tbody id="table">
+			<tr id="row-template">
+				<td>
+					<input class="name" />
+				</td>
+				<td>
+					<input class="amount" size="2" />
+				</td>
+				<td>
+					<input type="checkbox" class="checkbox" />
+				</td>
+				<td>
+					<input type="button" class="remove-row" value="-" />
+					<input type="button" class="add-row" value="+" />
+				</td>
+			</tr>
+		</tbody>
+		<tfoot>
+			<tr>
+				<td>Total</td>
+				<td class="total"></td>
+			</tr>
+		</tfoot>
+	</table>
+	<script src="vendor/jquery-3.3.1.slim.js" charset="utf-8"></script>
+	<script src="script.js"></script>
+</body>
+</html>
