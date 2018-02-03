@@ -61,7 +61,9 @@ function updateTotal($table) {
 		})
 		.on('click', '.remove-formula', function() {
 			var $thisFormula = $(this).parent();
-			$thisFormula.remove();
+			var $formulaName = $thisFormula.find('.formula-name').val();
+			var warning = $formulaName ? "Really delete the " + $formulaName + " formula?" : "Really delete this formula?";
+			if (confirm(warning)) $thisFormula.remove();
 		})
 		.on('click', '.add-row', function(event) {
 			var $thisRow = $(this).parent().parent();
