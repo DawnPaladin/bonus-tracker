@@ -14,6 +14,15 @@ input[type=text] {
 .text-right {
 	text-align: right;
 }
+.formula {
+	text-align: center;
+	background: #242729;
+	margin-bottom: 10px;
+}
+.formula-name, .remove-formula, .add-formula {
+	font-size: 18px;
+	font-weight: bold;
+}
 table {
 	margin: auto;
 }

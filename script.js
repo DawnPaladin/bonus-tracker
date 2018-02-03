@@ -1,8 +1,14 @@
+var $formulaTemplate = $('.formula').clone();
 var $rowTemplate = $('#row-template').clone().removeAttr('id');
 $('#row-template').hide();
 
 function addRowAfter($currentRow, $template) {
 	$currentRow.after($template.clone());
+}
+
+function newFormula(index) {
+	var $formulas = $('.formula');
+	$formulas.eq(index).after($formulaTemplate.clone());
 }
 
 function sumBonuses(bonuses) {
@@ -36,29 +42,44 @@ function sumBonuses(bonuses) {
 	return outputString.slice(3); // remove leading " + "
 }
 
-function updateTotal() {
+function updateTotal($table) {
 	var bonuses = [];
-	$('#table > tr').each(function() {
+	$table.find('tr').each(function() {
 		var value = $(this).find('.amount').val();
 		var checked = $(this).find('.checkbox').prop('checked');
 		if (value && checked) bonuses.push(value);
 	});
-	$('.total').text(sumBonuses(bonuses));
+	$table.find('.total').text(sumBonuses(bonuses));
 }
 
 (function init() {
 	addRowAfter($('#row-template'), $rowTemplate);
-	$('table')
-		.on('click', '.add-row', function() {
+	$('body')
+		.on('click', '.add-formula', function() {
+			var indexInFormulas = $('.formula').index($(this).parent());
+			newFormula(indexInFormulas);
+		})
+		.on('click', '.remove-formula', function() {
+			var $thisFormula = $(this).parent();
+			$thisFormula.remove();
+		})
+		.on('click', '.add-row', function(event) {
 			var $thisRow = $(this).parent().parent();
 			addRowAfter($thisRow, $rowTemplate);
 		})
-		.on('click', '.remove-row', function() {
+		.on('click', '.remove-row', function(event) {
 			var $thisRow = $(this).parent().parent();
 			$thisRow.remove();
-			updateTotal();
+			var $table = $(this).closest('table');
+			updateTotal($table);
 		})
-		.on('input', updateTotal) // checkboxes
-		.on('change', updateTotal) // recalc on each keypress
+		.on('input', function(event) {  // checkboxes
+			var $table = $(event.target).closest('table');
+			updateTotal($table);
+		})
+		.on('change', function(event) {  // recalc on each keypress
+			var $table = $(event.target).closest('table');
+			updateTotal($table);
+		})
 	;
 })();

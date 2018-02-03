@@ -8,39 +8,44 @@
 	<link rel="stylesheet" href="style.css">
 </head>
 <body>
-	<table>
-		<thead>
-			<tr>
-				<th>Name</th>
-				<th>Amount</th>
-				<th>On/off</th>
-				<th>Rows</th>
-			</tr>
-		</thead>
-		<tbody id="table">
-			<tr id="row-template">
-				<td>
-					<input type="text" class="name" />
-				</td>
-				<td>
-					<input type="text" class="amount" size="2" />
-				</td>
-				<td>
-					<input type="checkbox" class="checkbox" checked />
-				</td>
-				<td>
-					<input type="button" class="remove-row" value="-" />
-					<input type="button" class="add-row" value="+" />
-				</td>
-			</tr>
-		</tbody>
-		<tfoot>
-			<tr>
-				<td class="text-right">Total</td>
-				<td class="total"></td>
-			</tr>
-		</tfoot>
-	</table>
+	<div class="formula">
+		<input type="text" class="formula-name" />
+		<input type="button" class="remove-formula" value="-" />
+		<input type="button" class="add-formula" value="+" />
+		<table>
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Amount</th>
+					<th>On/off</th>
+					<th>Rows</th>
+				</tr>
+			</thead>
+			<tbody class="table">
+				<tr id="row-template">
+					<td>
+						<input type="text" class="name" />
+					</td>
+					<td>
+						<input type="text" class="amount" size="2" />
+					</td>
+					<td>
+						<input type="checkbox" class="checkbox" checked />
+					</td>
+					<td>
+						<input type="button" class="remove-row" value="-" />
+						<input type="button" class="add-row" value="+" />
+					</td>
+				</tr>
+			</tbody>
+			<tfoot>
+				<tr>
+					<td class="text-right">Total</td>
+					<td class="total"></td>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
 	<script src="vendor/jquery-3.3.1.slim.js" charset="utf-8"></script>
 	<script src="script.js"></script>
 </body>
