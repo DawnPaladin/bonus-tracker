@@ -40,7 +40,8 @@ function updateTotal() {
 	var bonuses = [];
 	$('#table > tr').each(function() {
 		var value = $(this).find('.amount').val();
-		if (value) bonuses.push(value);
+		var checked = $(this).find('.checkbox').prop('checked');
+		if (value && checked) bonuses.push(value);
 	});
 	$('.total').text(sumBonuses(bonuses));
 }
