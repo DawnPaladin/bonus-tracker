@@ -53,8 +53,11 @@ function updateTotal() {
 			var $thisRow = $(this).parent().parent();
 			addRowAfter($thisRow, $rowTemplate);
 		})
-		.on('change', function() {
+		.on('click', '.remove-row', function() {
+			var $thisRow = $(this).parent().parent();
+			$thisRow.remove();
 			updateTotal();
 		})
+		.on('input', updateTotal)
 	;
 })();
