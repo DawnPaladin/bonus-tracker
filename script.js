@@ -2,9 +2,14 @@ var $formulaTemplate = $('.formula').clone();
 var $rowTemplate = $('#row-template').clone().removeAttr('id');
 $('#row-template').hide();
 
-function addRowAfter($currentRow, $template) {
-	var $newRow = $template.clone();
+function addRowAfter($currentRow) {
+	var $newRow = $rowTemplate.clone();
 	$currentRow.after($newRow);
+	$newRow.find('.name').first().focus();
+}
+function addRowTo($table) {
+	var $newRow = $rowTemplate.clone();
+	$table.append($newRow);
 	$newRow.find('.name').first().focus();
 }
 
@@ -123,7 +128,7 @@ function renderRow(rowData) {
 
 (function init() {
 	if (!supports_html5_storage()) alert("Your browser does not support HTML5 storage, so your data will not be saved.");
-	addRowAfter($('#row-template'), $rowTemplate);
+	addRowAfter($('#row-template'));
 	$('body')
 		.on('click', '.add-formula', function() {
 			var indexInFormulas = $('.formula').index($(this).parent());
@@ -140,17 +145,25 @@ function renderRow(rowData) {
 				if ($rows.find('.name').val() == "" && $rows.find('.amount').val() == "") return true;
 			}
 			if (formulaIsEmpty() || confirm(warning)) $thisFormula.remove();
+			if ($('.formula').length == 0) {
+				var $newFormula = $formulaTemplate.clone();
+				$newFormula.find('#row-template').removeAttr('id');
+				$('body').append($newFormula);
+			}
 			saveData();
 		})
 		.on('click', '.add-row', function(event) {
 			var $thisRow = $(this).parent().parent();
-			addRowAfter($thisRow, $rowTemplate);
+			addRowAfter($thisRow);
 			saveData();
 		})
 		.on('click', '.remove-row', function(event) {
 			var $thisRow = $(this).parent().parent();
+			var $table = $thisRow.closest('.table');
 			$thisRow.remove();
-			var $table = $(this).closest('table');
+			if ($table.find('tr').length == 0) {
+				addRowTo($table);
+			}
 			updateTotal($table);
 			saveData();
 		})
