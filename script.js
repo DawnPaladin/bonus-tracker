@@ -124,6 +124,7 @@ function renderRow(rowData) {
 		.on('click', '.add-formula', function() {
 			var indexInFormulas = $('.formula').index($(this).parent());
 			newFormula(indexInFormulas);
+			saveData();
 		})
 		.on('click', '.remove-formula', function() {
 			var $thisFormula = $(this).parent();
@@ -135,24 +136,40 @@ function renderRow(rowData) {
 				if ($rows.find('.name').val() == "" && $rows.find('.amount').val() == "") return true;
 			}
 			if (formulaIsEmpty() || confirm(warning)) $thisFormula.remove();
+			saveData();
 		})
 		.on('click', '.add-row', function(event) {
 			var $thisRow = $(this).parent().parent();
 			addRowAfter($thisRow, $rowTemplate);
+			saveData();
 		})
 		.on('click', '.remove-row', function(event) {
 			var $thisRow = $(this).parent().parent();
 			$thisRow.remove();
 			var $table = $(this).closest('table');
 			updateTotal($table);
+			saveData();
 		})
 		.on('input', function(event) {  // checkboxes
 			var $table = $(event.target).closest('table');
 			updateTotal($table);
+			saveData();
 		})
 		.on('change', function(event) {  // recalc on each keypress
 			var $table = $(event.target).closest('table');
 			updateTotal($table);
+			saveData();
 		})
 	;
+})();
+
+(function registerServiceWorker() {
+	if ('serviceWorker' in navigator) {
+		navigator.serviceWorker.register('./serviceWorker.js').then(function(reg) {
+			console.log('Successfully registered serviceWorker', reg);
+		}).catch(function(err) {
+			console.warn('Error while registering serviceWorker', err);
+		});
+	}
+	loadData();
 })();
