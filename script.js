@@ -56,7 +56,46 @@ function updateTotal($table) {
 	$table.find('.total').text(sumBonuses(bonuses));
 }
 
+function supports_html5_storage() { // from https://stackoverflow.com/a/18250402
+	try {
+		return 'localStorage' in window && window['localStorage'] !== null;
+	} catch(e) {
+		return false;
+	}
+}
+
+function saveData() {
+	var data = [];
+	$('.formula').each(function() {
+		var formulaName = $(this).find('.formula-name').val();
+		var formulaRows = [];
+		var $rows = $(this).find('.table tr').not('#row-template');
+		$rows.each(function() {
+			var rowData = {
+				name: $(this).find('.name').val(),
+				amount: $(this).find('.amount').val(),
+				checkbox: $(this).find('.checkbox').is(':checked'),
+			};
+			formulaRows.push(rowData);
+		});
+		var formulaData = {
+			formulaName,
+			formulaRows,
+		};
+		data.push(formulaData);
+	});
+	localStorage.setItem('data', JSON.stringify(data));
+}
+function loadData() {
+	var data = JSON.parse(localStorage.getItem('data'));
+	// TODO: Render HTML matching the object. Or just learn React.
+}
+function clearData() {
+	Storage.clear();
+}
+
 (function init() {
+	if (!supports_html5_storage()) alert("Your browser does not support HTML5 storage, so your data will not be saved.");
 	addRowAfter($('#row-template'), $rowTemplate);
 	$('body')
 		.on('click', '.add-formula', function() {
@@ -65,8 +104,8 @@ function updateTotal($table) {
 		})
 		.on('click', '.remove-formula', function() {
 			var $thisFormula = $(this).parent();
-			var $formulaName = $thisFormula.find('.formula-name').val();
-			var warning = $formulaName ? "Really delete the " + $formulaName + " formula?" : "Really delete this formula?";
+			var formulaName = $thisFormula.find('.formula-name').val();
+			var warning = formulaName ? "Really delete the " + formulaName + " formula?" : "Really delete this formula?";
 			function formulaIsEmpty() {
 				$rows = $thisFormula.find('.table tr');
 				if ($rows.length > 1) return false;
