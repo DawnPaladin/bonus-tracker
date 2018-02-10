@@ -88,6 +88,10 @@ function saveData() {
 }
 function loadData() {
 	var data = JSON.parse(localStorage.getItem('data'));
+	if (!data) data = [{
+		formulaName: '',
+		formulaRows: [{ name: '', amount: '', checkbox: true }],
+	}];
 	$('.formula').remove();
 	data.forEach(function(formulaData) {
 		$('body').append(renderFormula(formulaData));
