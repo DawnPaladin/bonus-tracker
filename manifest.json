@@ -1,0 +1,10 @@
+{
+	"short_name": "Bonuses",
+	"name": "Bonus Tracker",
+	"description": "Keep track of which bonuses apply to your TTRPG character at any given moment",
+	"start_url": "index.html",
+	"display": "standalone",
+	"orientation": "portrait",
+	"theme_color": "#FAFAFA",
+	"background_color": "#1a1c1d"
+}
