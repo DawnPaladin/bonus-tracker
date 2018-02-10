@@ -3,7 +3,9 @@ var $rowTemplate = $('#row-template').clone().removeAttr('id');
 $('#row-template').hide();
 
 function addRowAfter($currentRow, $template) {
-	$currentRow.after($template.clone());
+	var $newRow = $template.clone();
+	$currentRow.after($newRow);
+	$newRow.find('.name').first().focus();
 }
 
 function newFormula(index) {
