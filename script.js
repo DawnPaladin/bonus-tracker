@@ -88,10 +88,33 @@ function saveData() {
 }
 function loadData() {
 	var data = JSON.parse(localStorage.getItem('data'));
-	// TODO: Render HTML matching the object. Or just learn React.
+	$('.formula').remove();
+	data.forEach(function(formulaData) {
+		$('body').append(renderFormula(formulaData));
+	});
 }
 function clearData() {
 	Storage.clear();
+}
+
+function renderFormula(formulaData) {
+	var $formula = $formulaTemplate.clone()
+		.find('.formula-name').val(formulaData.formulaName).end();
+	var $table = $formula.find('.table');
+	$table.find('tr').remove();
+	formulaData.formulaRows.forEach(function(rowData) {
+		$table.append(renderRow(rowData));
+	});
+	updateTotal($table.parent());
+	return $formula;
+}
+
+function renderRow(rowData) {
+	return $rowTemplate.clone()
+		.find('.name').val(rowData.name).end()
+		.find('.amount').val(rowData.amount).end()
+		.find('.checkbox').prop("checked", rowData.checkbox).end()
+	;
 }
 
 (function init() {
