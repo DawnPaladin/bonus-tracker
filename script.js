@@ -10,7 +10,9 @@ function addRowAfter($currentRow, $template) {
 
 function newFormula(index) {
 	var $formulas = $('.formula');
-	$formulas.eq(index).after($formulaTemplate.clone());
+	var $newFormula = $formulaTemplate.clone();
+	$newFormula.find('#row-template').removeAttr('id');
+	$formulas.eq(index).after($newFormula);
 }
 
 function sumBonuses(bonuses) {
@@ -65,7 +67,12 @@ function updateTotal($table) {
 			var $thisFormula = $(this).parent();
 			var $formulaName = $thisFormula.find('.formula-name').val();
 			var warning = $formulaName ? "Really delete the " + $formulaName + " formula?" : "Really delete this formula?";
-			if (confirm(warning)) $thisFormula.remove();
+			function formulaIsEmpty() {
+				$rows = $thisFormula.find('.table tr');
+				if ($rows.length > 1) return false;
+				if ($rows.find('.name').val() == "" && $rows.find('.amount').val() == "") return true;
+			}
+			if (formulaIsEmpty() || confirm(warning)) $thisFormula.remove();
 		})
 		.on('click', '.add-row', function(event) {
 			var $thisRow = $(this).parent().parent();
